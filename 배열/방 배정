@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    std::ios::sync_with_stdio(0);
+	std::cin.tie(0);
+	std::cout.tie(0);
+	int n, k,s,y;
+	std::cin >> n >> k;
+
+	std::vector<int> male{0};
+	std::vector<int> female{0};
+	male.resize(7);
+	female.resize(7);
+	int humanCount = 0;
+	for (int i = 0; i <n; ++i)
+	{
+		std::cin >> s >> y;
+		if (s == 0)
+		{
+			++humanCount;
+			female[y] = female[y] + humanCount;
+		}
+		else
+		{
+			++humanCount;
+			male[y] = male[y] + humanCount;
+		}
+		humanCount = 0;
+	}
+
+	
+	int femaleRemainder=0;
+	int maleRemainder=0;
+	int roomCount = 0;
+	for (int i = 0; i < female.size(); ++i)
+	{
+		if (female[i] == 0)
+		{
+			continue;
+		}
+		else if (female[i] <= k)
+		{
+			++roomCount;
+		}
+		else
+		{
+			++roomCount;
+			femaleRemainder = female[i] - k;
+			female.push_back(femaleRemainder);
+		}
+	}
+	for (int i = 0; i < male.size(); ++i)
+	{
+		if (male[i] == 0)
+		{
+			continue;
+		}
+		else if (male[i] <= k)
+		{
+			++roomCount;
+		}
+		else
+		{
+			++roomCount;
+			maleRemainder = male[i] - k;
+			male.push_back(maleRemainder);
+		}
+	}
+
+	std::cout << roomCount;
+}
