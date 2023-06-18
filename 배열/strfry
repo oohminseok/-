@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <map>
+int main()
+{
+    int testcase;
+	std::cin >> testcase;
+	std::string s1, s2;
+
+	while (testcase > 0)
+	{
+		std::cin >> s1 >> s2;
+		--testcase;
+		std::map<char, int> m1, m2;
+
+		for (char a = 'a'; a <= 'z'; ++a)
+		{
+			int count1 = 0;
+			for (int i = 0; i < s1.size(); ++i)
+			{
+				if (s1[i] == a)
+				{
+					++count1;
+				}
+			}
+			m1.insert(std::pair<char, int>(a, count1));
+		}
+
+		for (char a = 'a'; a <= 'z'; ++a)
+		{
+			int count2 = 0;
+			for (int i = 0; i < s2.size(); ++i)
+			{
+				if (s2[i] == a)
+				{
+					++count2;
+				}
+			}
+			m2.insert(std::pair<char, int>(a, count2));
+		}
+
+
+		int answer = 0;
+		for (char a ='a'; a<= 'z'; ++a)
+		{
+			if (m1[a] == m2[a])
+			{
+				continue;
+			}
+			else if (m1[a] != m2[a])
+			{
+				answer = 1;
+				break;
+			}
+		}
+	
+
+		if (answer == 0)
+		{
+			std::cout << "Possible" << '\n';
+		}
+		if (answer == 1)
+		{
+			std::cout << "Impossible" << '\n';
+		}
+	}
+}
