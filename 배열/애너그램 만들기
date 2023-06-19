@@ -1,0 +1,70 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+int main()
+{
+    std::string s1, s2;
+	std::cin >> s1 >> s2;
+	std::map<char, int> m1, m2;
+
+	for (char a = 'a'; a <= 'z'; ++a)
+	{
+		int count1 = 0;
+		for (int i = 0; i < s1.size(); ++i)
+		{
+			if (s1[i] == a)
+			{
+				++count1;
+			}
+		}
+		m1.insert(std::pair<char, int>(a, count1));
+	}
+
+	for (char a = 'a'; a <= 'z'; ++a)
+	{
+		int count2 = 0;
+		for (int i = 0; i < s2.size(); ++i)
+		{
+			if (s2[i] == a)
+			{
+				++count2;
+			}
+		}
+		m2.insert(std::pair<char, int>(a, count2));
+	}
+
+
+	int answer1 = 0;
+	int answer2 = 0;
+	int sum = 0;
+	for (char a = 'a'; a <= 'z'; ++a)
+	{
+		if (m1[a] == m2[a])
+		{
+			continue;
+		}
+		else if (m1[a] != m2[a])
+		{
+			answer1 = m1[a];
+			answer2 = m2[a];
+			if (answer1 > answer2)
+			{
+				sum = sum + answer1 - answer2;
+			}
+			else if (answer1 < answer2)
+			{
+				sum = sum + answer2 - answer1;
+			}
+		}
+	}
+	
+	if (sum > 0)
+	{
+		std::cout << sum;
+	}
+	else if (sum == 0)
+	{
+		std::cout << sum;
+	}
+}
