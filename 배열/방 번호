@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+int main()
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	std::string s;
+	std::cin >> s;
+	std::queue<char> temp;
+	for (int i = 0; i < s.size(); ++i)
+	{
+		temp.push(s[i]);
+	}
+
+
+	int count = 0;
+	std::vector<char> stemp;
+	while (s.size() != stemp.size())
+	{
+		std::queue<char> PlasticSet;
+
+		for (char i = '0'; i <= '9'; ++i)
+		{
+			PlasticSet.push(i);
+		}
+
+		while (!PlasticSet.empty())
+		{
+			char curret = PlasticSet.front();
+			PlasticSet.pop();
+			for (int i = 0; i < s.size(); ++i)
+			{
+				if (s[i]=='6'||s[i]=='9')
+				{
+					if (curret == '6' || curret == '9')
+					{
+						stemp.push_back(curret);
+						s[i] = '\0';
+						break;
+					}
+				}
+				else if (s[i] != '6' || s[i] != '9')
+				{
+					if (curret == s[i])
+					{
+						stemp.push_back(curret);
+						s[i] = '\0';
+						break;
+					}
+				}
+			}
+
+		}
+		++count;
+
+	}
+	std::cout << count;
+
+}
