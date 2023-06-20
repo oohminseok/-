@@ -9,13 +9,7 @@ int main()
 
 	std::string s;
 	std::cin >> s;
-	std::queue<char> temp;
-	for (int i = 0; i < s.size(); ++i)
-	{
-		temp.push(s[i]);
-	}
-
-
+	
 	int count = 0;
 	std::vector<char> stemp;
 	while (s.size() != stemp.size())
