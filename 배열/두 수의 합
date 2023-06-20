@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+int main()
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int n; //수열의 크기
+	std::cin >> n;
+
+	std::queue<int> array;
+	std::vector<int> array2(10000000, 0);
+	for (int i = 0; i < n; ++i)
+	{
+		int number;
+		std::cin >> number;
+		array.push(number);
+		array2[number]=1;
+	}
+	int x; //x의 값
+	std::cin >> x;
+
+	int count = 0;
+	while (!array.empty())
+	{
+		int current = x-array.front();
+		array.pop();
+		if (current > 0)
+		{
+			if (array2[current] == 1)
+			{
+				++count;
+			}
+		}
+		else if (current < 0)
+		{
+			continue;
+		}
+		
+	}
+
+	std::cout << count/2;
+}
+	
