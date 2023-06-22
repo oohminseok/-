@@ -1,0 +1,59 @@
+
+#include <iostream>
+#include <string>
+#include <list>
+
+int main() 
+{
+  std::ios::sync_with_stdio(0);
+	std::cin.tie(0);
+
+	int testcase;
+	std::cin >> testcase;
+
+	for (int i = 1; i <= testcase; ++i)
+	{
+		std::string s;
+		std::list<char> temp{};
+		std::cin >> s;
+
+		auto iter = temp.begin();
+
+		for(auto e: s)
+		{
+			if (e == '<')
+			{
+				if (iter != temp.begin())
+				{
+					iter--;
+				}
+
+			}
+			else if (e == '>')
+			{
+				if (iter != temp.end())
+				{
+					iter++;
+				}
+			}
+			else if (e == '-')
+			{
+				if (iter != temp.begin())
+				{
+					iter--;
+					iter = temp.erase(iter);
+				}
+			}
+			else
+			{
+				temp.insert(iter, e);
+			}
+		}
+
+		for (auto e : temp)
+		{
+			std::cout << e;
+		}
+		std::cout << '\n';
+	}
+}
