@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+#include <list>
+
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cin.tie(0);
+	std::cout.tie(0);
+
+	std::string s;
+	std::cin >> s;
+	std::list<char> temp;
+	for (int i = 0; i < s.size(); ++i)
+	{
+		temp.push_back(s[i]);
+	}
+	int n;
+	std::cin >> n;
+	std::list<char>::iterator itr = temp.end();
+	for (int i = 0; i <= n; ++i)
+	{
+		std::string input;
+		std::getline(std::cin, input);
+
+		if (input[0] == 'L')
+		{
+			if (itr==temp.begin())
+			{
+				continue;
+			}
+			else
+			{
+				--itr;
+			}
+		}
+		else if (input[0] == 'D')
+		{
+			if (itr == temp.end())
+			{
+				continue;
+			}
+			else
+			{
+				++itr;
+			}
+		}
+		else if (input[0] == 'B')
+		{
+			if (itr == temp.begin())
+			{
+				continue;
+			}
+			else
+			{
+				std::list<char>::iterator itrtemp = itr;
+				--itrtemp;
+				temp.erase(itrtemp);
+			}
+		}
+		else if (input[0] == 'P')
+		{
+			std::list<char>::iterator itrtemp = itr;
+			temp.insert(itrtemp, input[2]);
+		}
+	}
+	
+	for (auto e : temp)
+	{
+		std::cout << e;
+	}
+
+
+}
