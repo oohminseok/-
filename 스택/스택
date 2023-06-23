@@ -1,0 +1,59 @@
+#include <iostream>
+#include <stack>
+#include <string>
+int main()
+{
+    std::stack<int> stack;
+	int n;
+	std::cin >> n;
+
+	std::string s;
+	for (int i = 1; i <=n; ++i)
+	{
+		std::cin >> s;
+		if (s == "push")
+		{
+			int number;
+			std::cin >> number;
+			stack.push(number);
+		}
+		else if (s == "pop")
+		{
+			if (stack.empty())
+			{
+				std::cout << -1 << '\n';
+			}
+			else
+			{
+				std::cout << stack.top() << '\n';
+				stack.pop();
+			}
+		}
+		else if (s == "size")
+		{
+			std::cout << stack.size() << '\n';
+		}
+		else if (s == "empty")
+		{
+			if (stack.empty())
+			{
+				std::cout << 1 << '\n';
+			}
+			else
+			{
+				std::cout << 0 << '\n';
+			}
+		}
+		else
+		{
+			if (stack.empty())
+			{
+				std::cout << -1 << '\n';
+			}
+			else
+			{
+				std::cout << stack.top() << '\n';
+			}
+		}
+	}
+}
