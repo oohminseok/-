@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <stack>
+
+int main()
+{
+	std::stack<int> stack;
+	int n1,n2;
+	std::cin >> n1;
+	
+	for (int i = 1; i <= n1; ++i)
+	{
+		std::cin >> n2;
+
+		if (n2 == 0)
+		{
+			if (stack.empty())
+			{
+				break;
+			}
+			else
+			{
+				stack.pop();
+			}
+		}
+		else
+		{
+			stack.push(n2);
+		}
+	}
+
+	if (stack.empty())
+	{
+		std::cout << 0;
+	}
+	else
+	{
+		int sum = 0;
+		while (!stack.empty())
+		{
+			sum = sum + stack.top();
+			stack.pop();
+		}
+		std::cout << sum;
+	}
+
+}
