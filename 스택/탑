@@ -1,0 +1,28 @@
+#include <iostream>
+#include <stack>
+
+
+int main()
+{ 
+	std::ios_base::sync_with_stdio(0);
+	std::cin.tie(0);
+    std::stack<std::pair<int, int>> stack;
+    int n, n2;
+
+	std::cin >> n;
+	stack.push({ 100000001, 0 });
+
+	for (int i = 1; i <= n; ++i)
+	{
+		std::cin >> n2;
+
+		while (n2 >stack.top().first)
+		{
+			stack.pop();
+		}
+		std::cout << stack.top().second << " ";
+		stack.push({ n2, i });
+	}
+	
+}
+
