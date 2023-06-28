@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <queue>
+
+int main()
+{
+	std::ios::sync_with_stdio(0);
+	std::cin.tie(0);
+	std::cout.tie(0);
+
+	std::queue<int>card;
+	int n;
+	std::cin >> n;
+
+	for (int i = 1; i <= n; ++i)
+	{
+		card.push(i);
+	}
+
+	if (card.size() == 1)
+	{
+		std::cout << card.front();
+	}
+	else
+	{
+		int i = 1;
+		while(card.size()!=1)
+		{
+			if (i == 1||i%2!=0)
+			{
+				card.pop();
+				++i;
+			}
+			else if (i % 2 == 0)
+			{
+				int temp = card.front();
+				card.push(temp);
+				card.pop();
+				++i;
+			}
+		}
+		std::cout << card.front();
+	}
+
+}
