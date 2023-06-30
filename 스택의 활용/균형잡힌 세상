@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <stack>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+	
+	std::stack<char> stack;
+	std::string s;
+
+	while(true)
+	{
+		std::string s;
+		std::getline(std::cin, s);
+		if (s == ".")
+		{
+			break;
+		}
+		std::stack<char> stack;
+		bool isVailed = true;
+		for (int j = 0; j < s.size(); ++j)
+		{
+			if (s[j] == '(' || s[j]== '[')
+			{
+				stack.push(s[j]);
+			}
+			else if (s[j] == ')')
+			{
+				if (stack.empty()||stack.top()!='(')
+				{
+					isVailed = false;
+					break;
+				}
+				stack.pop();
+			}
+			else if (s[j] == ']')
+			{
+				if (stack.empty()||stack.top()!='[')
+				{
+					isVailed = false;
+					break;
+				}
+				stack.pop();
+			}
+		}
+		if (!stack.empty())
+		{
+			isVailed = false;
+		}
+		if (isVailed)
+		{
+			std::cout << "yes" << '\n';
+		}
+		else
+		{
+			std::cout << "no" << '\n';
+		}
+	}
+}
