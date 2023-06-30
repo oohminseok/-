@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <stack>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int n;
+	std::cin >> n; //단어의 개수 입력
+
+	int count = 0;
+	for (int i = 1; i <= n; ++i)
+	{
+		std::string s;
+		std::cin >> s; //a와b로 이루어진 단어 입력
+		std::stack<int> stack;
+
+		for (auto e : s)
+		{
+			if (stack.empty())
+			{
+				stack.push(e);
+			}
+			else if (stack.top() != e)
+			{
+				stack.push(e);
+			}
+			else if (stack.top() == e)
+			{
+				stack.pop();
+			}
+		}
+		if (stack.empty())
+		{
+			++count;
+		}
+		else if (!stack.empty())
+		{
+			count;
+		}
+	}
+	std::cout << count;
+}
