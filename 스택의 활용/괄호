@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <stack>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int n;
+	std::cin >> n; //테스트 케이스
+
+	for (int i = 1; i <= n; ++i)
+	{
+		std::string s;
+		std::cin >> s; //괄호로 이루어진 문자열 입력
+		std::stack<int> stack;
+
+		for (auto e : s)
+		{
+			if (stack.empty()||e=='(')
+			{
+				stack.push(e);
+			}
+			if (stack.top() == ')')
+			{
+				break;
+			}
+			else if (e == ')')
+			{
+				stack.pop();
+			}
+		}
+		if (stack.empty())
+		{
+			std::cout << "YES" << '\n';
+		}
+		else if (!stack.empty())
+		{
+			std::cout << "NO" << '\n';
+		}
+	}
+}
