@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <stack>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	std::string s;
+	std::cin >> s;// 쇠막대기 및 레이저의 배치 입력
+	std::stack<std::string> stack;
+    
+	int count = 0;
+	int raseCount = 0;
+	int sum = 0;
+	for (auto iter : s)
+	{
+		if (stack.empty()||iter == '(')
+		{
+			stack.push("(");
+			++count;
+		}
+		else if (iter == ')')
+		{
+			if (stack.top() == "(")
+			{
+				stack.pop();
+				stack.push("()");
+				--count;
+				raseCount = 1;
+				sum = sum + (count * raseCount);
+			}
+			else if (stack.top() == "()")
+			{
+				--count;
+				sum = sum + 1;
+			}
+		}
+	}
+	std::cout << sum;
+}
