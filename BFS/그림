@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+int main() 
+{
+    std::ios::sync_with_stdio(0);
+    std::cout.tie(0);
+    std::cin.tie(0);
+    int n, m; //행과 열
+    std::cin >> n >> m;
+
+    std::vector<std::vector<int>> board(n, std::vector<int>(m, 0)); //도화지 세로 및 가로크기
+    std::vector<std::vector<int>>visit(500, std::vector<int>(500, 0)); //방문표시
+    std::vector<int> x{ -1,1,0,0 }; //상하
+    std::vector<int> y{ 0,0,-1,1 }; //좌우
+
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < m; ++j)
+        {
+            std::cin >> board[i][j]; //색칠 및 색칠 안되는 부분 입력
+        }
+    }
+
+    int mx = 0;
+    int count = 0; //그림의 개수
+
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < m; ++j)
+        {
+            if (visit[i][j] || board[i][j] == 0)
+            {
+                continue;
+            }
+            ++count;
+            std::queue<std::pair<int, int>> q;
+            visit[i][j] = 1;
+            q.push({ i,j });
+            int area = 0; //그림의 넓이
+            while (!q.empty())
+            {
+                ++area;
+                std::pair<int, int> current = q.front();
+                q.pop();
+                for (int i = 0; i < x.size(); ++i)
+                {
+                    int fx = current.first + x[i];
+                    int fy = current.second + y[i];
+
+                    if (fx < 0 || fx >= n || fy < 0 || fy >= m)
+                    {
+                        continue;
+                    }
+                    if (visit[fx][fy]==1 ||board[fx][fy]!=1)
+                    {
+                        continue;
+                    }
+                    visit[fx][fy] = 1;
+                    q.push({ fx,fy });
+                }
+            }
+            if (mx < area)
+            {
+                mx = area;
+            }
+        }
+    }
+    std::cout << count << '\n'<< mx;
+
+
+   
+}
