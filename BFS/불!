@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+std::string board[1000];
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+
+	int R, C; //미로 행과 열의 개수
+	std::cin >> R >> C;
+	std::vector<std::vector<int>> fireDist(R, std::vector<int>(C, -1));
+	std::vector<std::vector<int>> jihoonDist(R, std::vector<int>(C, -1));
+	std::vector<int> x{ -1,1,0,0 };
+	std::vector<int> y{ 0,0,-1,1 };
+	std::queue<std::pair<int, int>> q1, q2;
+	std::queue<std::pair<int, int>> temp;
+	for (int i = 0; i < R; ++i)
+	{
+		std::cin >> board[i];
+	}
+
+	for (int i = 0; i < R; ++i)
+	{
+		for (int j = 0; j < C; ++j)
+		{
+			if (board[i][j] == 'J')
+			{
+				q1.push({ i,j });
+				jihoonDist[i][j] = 0;
+			}
+			if (board[i][j] == 'F')
+			{
+				q2.push({ i,j });
+				fireDist[i][j] = 0;
+			}
+		}
+	}
+
+
+	while (!q2.empty())
+	{
+		std::pair<int, int> current = q2.front();
+		q2.pop();
+
+		for (int i = 0; i < x.size(); ++i)
+		{
+			int fx = current.first + x[i];
+			int fy = current.second + y[i];
+
+			if (fx < 0 || fx >= R || fy < 0 || fy >= C)
+			{
+				continue;
+			}
+			if (fireDist[fx][fy] >=0||board[fx][fy] == '#' || board[fx][fy] == 'J')
+			{
+				continue;
+			}
+			fireDist[fx][fy] = fireDist[current.first][current.second] + 1;
+			q2.push({ fx,fy });
+		}
+	}
+
+	while (!q1.empty())
+	{
+		std::pair<int, int> current = q1.front();
+		q1.pop();
+
+		for (int i = 0; i < x.size(); ++i)
+		{
+			int fx = current.first + x[i];
+			int fy = current.second + y[i];
+
+			if (fx < 0 || fx >= R || fy < 0 || fy >= C)
+			{
+				std::cout<< jihoonDist[current.first][current.second] + 1;
+				return 0;
+			}
+			if (jihoonDist[fx][fy] >= 0 || board[fx][fy] == '#' || board[fx][fy] == 'F')
+			{
+				continue;
+			}
+			if (fireDist[fx][fy] != -1 && fireDist[fx][fy] <= jihoonDist[current.first][current.second] + 1)
+			{
+				continue;
+			}
+			jihoonDist[fx][fy] = jihoonDist[current.first][current.second] + 1;
+			q1.push({ fx,fy });
+		}
+	}
+
+	std::cout << "IMPOSSIBLE";
+}
