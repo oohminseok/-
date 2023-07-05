@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+	
+	int n, m;
+	std::cin >> m >> n;
+	std::vector<std::vector<int>> board(n, std::vector<int>(m, 0)); //상자
+	std::vector<std::vector<int>> day(n, std::vector<int>(m, 0)); //날짜;
+	std::vector<int> x{ -1,1,0,0 };
+	std::vector<int> y{ -0,0,-1,1 };
+	std::queue<std::pair<int, int>> q;
+
+	for (int i = 0; i < n;++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			std::cin >> board[i][j]; //토마토가 비어있으면 -1, 익으면 1 , 안 익으면 0
+			if (board[i][j] == 1)
+			{
+				q.push({ i,j });
+			}
+            if (board[i][j] == 0)
+			{
+				day[i][j] = -1;
+			}
+		}
+	}
+	std::pair<int, int> current;
+
+	while (!q.empty())
+	{
+		current = q.front();
+		q.pop();
+
+		for (int i = 0; i < x.size(); ++i)
+		{
+			int fx = current.first + x[i];
+			int fy = current.second + y[i];
+			if (fx < 0 || fx >= n || fy < 0 || fy >= m)
+			{
+				continue;
+			}
+			if (day[fx][fy]>=0)
+			{
+				continue;
+			}
+			day[fx][fy] = day[current.first][current.second] + 1;
+			q.push({ fx,fy });
+		}
+	}
+
+
+	int answer = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			if (day[i][j]==-1)
+			{
+				std::cout << -1;
+				return 0;
+			}
+			answer = std::max(answer, day[i][j]);
+		}
+	}
+
+	std::cout << answer;
+
+
+}
