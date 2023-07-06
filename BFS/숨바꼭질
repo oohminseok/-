@@ -1,0 +1,44 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+
+int dist[100002];
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+	
+	int n, k; //수빈이 위치, 동생의 위치
+
+	
+	std::cin >> n >> k;
+	std::fill(dist, dist + 100001, -1);
+	dist[n] = 0;
+	std::queue<int> q;
+	q.push(n);
+
+	while (dist[k]==-1)
+	{
+		int current = q.front();
+		q.pop();
+
+		for (int nxt:{current-1,current+1,2*current})
+		{
+			if (nxt < 0 || nxt>100000)
+			{
+				continue;
+			}
+			if (dist[nxt] != -1)
+			{
+				continue;
+			}
+			dist[nxt] = dist[current] + 1;
+			q.push(nxt);
+		}
+	}
+	std::cout << dist[k];
+
+	
+}
