@@ -1,0 +1,169 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+	
+	int n;
+	std::cin >> n; //n개의 줄 입력
+	std::vector<int> x{ -1,1,0,0 };
+	std::vector<int> y{ 0,0,-1,1 };
+
+	std::string board[100];
+	for (int i = 0; i <n; ++i)
+	{
+		std::cin >> board[i]; //보드판 입력
+	}
+
+	std::queue<std::pair<int,int>> q; //큐 준비
+	std::vector<std::vector<int>> visit1(100,std::vector<int>(100,0)); //적록색아닌 사람 방문표시
+	int count1 = 0;//적록색 아닌사람 구역 카운트
+
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < n; ++j)
+		{
+			if (visit1[i][j])
+			{
+				continue;
+			}
+			++count1;
+			q.push({ i,j });
+			visit1[0][0] = 1;
+			while (!q.empty())
+			{
+				std::pair<int, int> current = q.front();
+				q.pop();
+
+				if (board[current.first][current.second]=='R')
+				{
+					for (int i = 0; i < x.size(); ++i)
+					{
+						int fx = current.first + x[i]; //상하 좌표
+						int fy = current.second + y[i]; // 좌우 좌표
+
+						if (fx < 0 || fx >= n || fy < 0 || fy >= n)
+						{
+							continue;
+						}
+						if (visit1[fx][fy] == 1 ||board[fx][fy]=='G'||board[fx][fy]=='B')
+						{
+							continue;
+						}
+						visit1[fx][fy] = 1;
+						q.push({ fx,fy });
+					}
+				}
+				else if (board[current.first][current.second] == 'G')
+				{
+					for (int i = 0; i < x.size(); ++i)
+					{
+						int fx = current.first + x[i]; //상하 좌표
+						int fy = current.second + y[i]; // 좌우 좌표
+
+						if (fx < 0 || fx >= n || fy < 0 || fy >= n)
+						{
+							continue;
+						}
+						if (visit1[fx][fy] == 1 || board[fx][fy] == 'R' || board[fx][fy] == 'B')
+						{
+							continue;
+						}
+						visit1[fx][fy] = 1;
+						q.push({ fx,fy });
+					}
+				}
+				else if (board[current.first][current.second] == 'B')
+				{
+					for (int i = 0; i < x.size(); ++i)
+					{
+						int fx = current.first + x[i]; //상하 좌표
+						int fy = current.second + y[i]; // 좌우 좌표
+
+						if (fx < 0 || fx >= n || fy < 0 || fy >= n)
+						{
+							continue;
+						}
+						if (visit1[fx][fy] == 1 || board[fx][fy] == 'R' || board[fx][fy] == 'G')
+						{
+							continue;
+						}
+						visit1[fx][fy] = 1;
+						q.push({ fx,fy });
+					}
+				}
+			}
+
+		}
+	}
+
+	std::vector<std::vector<int>> visit2(100, std::vector<int>(100, 0)); //적록색 사람 방문표시
+	int count2 = 0;//적록색 사람 구역 카운트
+
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < n; ++j)
+		{
+			if (visit2[i][j])
+			{
+				continue;
+			}
+			++count2;
+			q.push({ i,j });
+			visit2[0][0] = 1;
+			while (!q.empty())
+			{
+				std::pair<int, int> current = q.front();
+				q.pop();
+
+				if (board[current.first][current.second] == 'R'|| board[current.first][current.second] == 'G')
+				{
+					for (int i = 0; i < x.size(); ++i)
+					{
+						int fx = current.first + x[i]; //상하 좌표
+						int fy = current.second + y[i]; // 좌우 좌표
+
+						if (fx < 0 || fx >= n || fy < 0 || fy >= n)
+						{
+							continue;
+						}
+						if (visit2[fx][fy] == 1 || board[fx][fy] == 'B')
+						{
+							continue;
+						}
+						visit2[fx][fy] = 1;
+						q.push({ fx,fy });
+					}
+				}
+				else if (board[current.first][current.second] == 'B')
+				{
+					for (int i = 0; i < x.size(); ++i)
+					{
+						int fx = current.first + x[i]; //상하 좌표
+						int fy = current.second + y[i]; // 좌우 좌표
+
+						if (fx < 0 || fx >= n || fy < 0 || fy >= n)
+						{
+							continue;
+						}
+						if (visit2[fx][fy] == 1 || board[fx][fy] == 'R' || board[fx][fy] == 'G')
+						{
+							continue;
+						}
+						visit2[fx][fy] = 1;
+						q.push({ fx,fy });
+					}
+				}
+			}
+		}
+	}
+
+
+	std::cout << count1 << " " << count2;
+}
