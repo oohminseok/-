@@ -1,0 +1,32 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+
+using namespace std;
+
+int main() 
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    std::stack<std::pair<int, int>> stack;
+
+    long long n;
+    std::cin >> n;
+
+    long long j = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        int k;
+        std::cin >> k;
+
+        while (!stack.empty() && stack.top().first <= k)
+        {
+            stack.pop();
+        }
+        j += stack.size();
+        stack.push({ k,i });
+    }
+
+    std::cout << j;
+}
