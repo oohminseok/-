@@ -1,0 +1,107 @@
+#include <iostream>
+#include <queue>
+#include <random>
+#include <vector>
+
+std::string board[1000]; // 빌딩 지도
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int t;
+	std::cin >> t; //테스트 케이스
+
+	while (t > 0)
+	{
+		
+		int w, h; //빌딩 너비 높이;
+		std::cin >> w >> h;
+		for (int i = 0; i < h; ++i)
+		{
+			std::cin >> board[i];
+		}
+
+		std::queue<std::pair<int, int>> q1, q2;
+		std::vector<std::vector<int>> dist1(h, std::vector<int>(w, 0)),dist2(h, std::vector<int>(w, 0));
+		for (int i = 0; i < h; ++i)
+		{
+			for (int j = 0; j < w; ++j)
+			{
+				if (board[i][j] == '*')
+				{
+					q1.push({ i,j });
+					dist1[i][j] = 1;
+				}
+				else if (board[i][j] == '@')
+				{
+					q2.push({ i,j });
+					dist2[i][j] = 1;
+				}
+			}
+		}
+
+
+		std::vector<int> x{ -1,1,0,0 }; //상하;
+		std::vector<int> y{ 0,0,-1,1 }; //좌우//
+
+		while (!q1.empty())
+		{
+			std::pair<int, int> current = q1.front();
+			q1.pop();
+
+			for (int i = 0; i < x.size(); ++i)
+			{
+				int fx = current.first + x[i];
+				int fy = current.second + y[i];
+
+				if (fx<0 || fx>=h || fy<0 || fy>=w)
+				{
+					continue;
+				}
+				if (board[fx][fy] == '#' || dist1[fx][fy])
+				{
+					continue;
+				}
+				dist1[fx][fy] = dist1[current.first][current.second] + 1;
+				q1.push({ fx,fy });
+			}
+		}
+
+		bool answer = false;
+		while ((!q2.empty())&&(!answer))
+		{
+			std::pair<int, int> current = q2.front();
+			q2.pop();
+
+			for (int i = 0; i < x.size(); ++i)
+			{
+				int fx = current.first + x[i];
+				int fy = current.second + y[i];
+				if (fx < 0 || fx >= h || fy < 0 || fy >= w)
+				{
+					std::cout << dist2[current.first][current.second] << '\n';
+					answer = true;
+					break;
+				}
+				if (board[fx][fy] == '#'||dist2[fx][fy])
+				{
+					continue;
+				}
+				if (dist1[fx][fy] != 0 && dist1[fx][fy] <= dist2[current.first][current.second] + 1)
+				{
+					continue;
+				}
+				dist2[fx][fy] = dist2[current.first][current.second] + 1;
+				q2.push({ fx,fy });
+			}
+		}
+		if (!answer)
+		{
+			std::cout << "IMPOSSIBLE" << '\n';
+		}
+		--t;
+	}
+
+}
