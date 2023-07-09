@@ -1,0 +1,86 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int m;
+	std::cin >> m; //지도 크기
+
+	std::string board[100];
+	std::vector<std::vector<int>> dist(m, std::vector<int>(m, -1));
+
+	for (int i =0; i < m; ++i)
+	{
+		std::cin >> board[i];
+	}
+
+	for (int i = 0; i < m; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			if (board[i][j] == '1')
+			{
+				dist[i][j] = 0;
+			}
+		}
+	}
+
+	int count = 0;
+	std::vector<int> temp;
+	std::vector<int> x{ -1,1,0,0 }; //상하
+	std::vector<int> y{ 0,0,-1,1 };//좌우
+	for (int i = 0; i < m; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			if (dist[i][j]==-1||dist[i][j])
+			{
+				continue;
+			}
+			std::queue<std::pair<int, int>> q;
+			q.push({ i,j });
+			dist[i][j] = 1;
+			++count;
+			int width = 0;
+			++width;
+			while (!q.empty())
+			{
+				std::pair<int, int> current = q.front();
+				q.pop();
+	
+				for (int i = 0; i < x.size(); ++i)
+				{
+					int fx = current.first + x[i];
+					int fy = current.second + y[i];
+
+					if (fx < 0 || fx >= m || fy < 0 || fy >= m|| dist[fx][fy])
+					{
+						continue;
+					}
+					if (board[fx][fy] == '0')
+					{
+						continue;
+					}
+					++width;
+					dist[fx][fy] = dist[current.first][current.second] + 1;
+					q.push({ fx,fy });
+				}
+			}
+			temp.push_back(width);
+		}
+	}
+
+	std::cout << count << '\n';
+	std::sort(temp.begin(), temp.end());
+	for (auto e : temp)
+	{
+		std::cout << e << '\n';
+	}
+
+}
