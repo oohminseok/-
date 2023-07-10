@@ -1,0 +1,48 @@
+#include <iostream>
+#include <queue>
+#include <random>
+#include <vector>
+#include <tuple>
+#include <algorithm>
+
+int main() 
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int f, s, g, u, d;
+	std::vector<int> l{ -1,0 };
+	std::vector<int> r{ 0,1 };
+	std::cin >> f >> s >> g >> u >> d;
+	std::vector<int> dist(1000002);
+	std::fill(dist.begin() + 1, dist.begin() + f + 1, -1);
+
+	std::queue<int> q;
+	dist[s] = 0;
+	q.push(s);
+
+	while (!q.empty())
+	{
+		int current = q.front();
+		q.pop();
+		for (auto iter : { current + u,current - d })
+		{
+			if (iter > f || iter <= 0 || dist[iter]>=0)
+			{
+				continue;
+			}
+			dist[iter] = dist[current] + 1;
+			q.push(iter);
+		}
+	}
+
+	if (dist[g] == -1)
+	{
+		std::cout << "use the stairs" << '\n';
+	}
+	else
+	{
+		std::cout << dist[g] << '\n';
+	}
+}
