@@ -1,0 +1,130 @@
+#include <iostream>
+#include <queue>
+#include <random>
+#include <vector>
+#include <tuple>
+#include <algorithm>
+
+int main()
+{
+	std::ios::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::cin.tie(0);
+
+	int n, m;
+	std::cin >> n >> m;
+
+	std::vector<std::vector<int>> board(n, std::vector<int>(m, 0));
+	std::vector<int> y{ -1,1,0,0 };
+	std::vector<int> x{ 0,0,-1,1 };
+	int year = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+		{
+			std::cin >> board[i][j];
+		}
+	}
+
+	std::queue<std::pair<int, int>>q;
+
+	bool answer = true;
+	while (answer)
+	{
+		++year;
+		std::vector<std::vector<int>> current(n, std::vector<int>(m, 0));
+        std::vector<std::vector<int>> visit(n, std::vector<int>(m, 0));
+		for (int i = 0; i <n ; ++i)
+		{
+			for (int j = 0; j < m; ++j)
+			{
+				if (board[i][j] == 0)
+				{
+					continue;
+				}
+				for (int k = 0; k < x.size(); ++k)
+				{
+					int fy = i + y[k];
+					int fx = j + x[k];
+					if (fy < 0 || fy >= n || fx < 0 || fx >= m||current[fy][fx]>0)
+					{
+						continue;
+					}
+					if (board[fy][fx] == 0)
+					{
+						current[i][j]++;
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < n; ++i)
+		{
+			for (int j = 0; j < m; ++j)
+			{
+				board[i][j] = std::max(0,board[i][j] - current[i][j]);
+			}
+		}
+
+		int count1 = 0;
+		int count2 = 0;
+		int temp1 = 0;
+		int temp2 = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			for (int j = 0; j < m; ++j)
+			{
+				if (board[i][j] > 0)
+				{
+					temp1= i;
+					temp2 = j;
+					++count1;
+				}
+			}
+		}
+		if (count1 == 0)
+		{
+            std::cout<<0;
+			return 0;
+		}
+
+		std::queue<std::pair<int, int>> q;
+		q.push({ temp1,temp2 });
+		visit[temp1][temp2] = 1;
+		while (!q.empty())
+		{
+			std::pair<int, int> current = q.front();
+			q.pop();
+			++count2;
+			for (int i = 0; i < x.size(); ++i)
+			{
+				int fy = current.first + y[i];
+				int fx = current.second + x[i];
+
+				if (fy < 0 || fy >= n || fx < 0 || fx >= m)
+				{
+					continue;
+				}
+				if (visit[fy][fx] > 0||board[fy][fx]<=0)
+				{
+					continue;
+				}
+				visit[fy][fx] = visit[current.first][current.second] + 1;
+				q.push({ fy,fx });
+			}
+		}
+
+		if (count1 == count2)
+		{
+			answer = true;
+		}
+		else
+		{
+			answer = false;
+		}
+	}
+
+	std::cout << year;
+
+
+}
