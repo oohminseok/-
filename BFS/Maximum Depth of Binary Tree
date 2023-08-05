@@ -1,0 +1,29 @@
+class Solution 
+{
+public:
+    int maxDepth(TreeNode* root) 
+    {
+        int maxDepth=0;
+        if(root==nullptr)
+        {
+            return maxDepth;
+        }
+        std::queue<std::pair<TreeNode*,int>> q;
+        q.push({root,1});
+        while(!q.empty())
+        {
+            std::pair<TreeNode*,int> current=q.front();
+            maxDepth=std::max(maxDepth,current.second);
+            q.pop();
+            if(current.first->left)
+            {
+                q.push({current.first->left,current.second+1});
+            }
+            if(current.first->right)
+            {
+                q.push({current.first->right,current.second+1});
+            }
+        }
+        return maxDepth;
+    }
+};
