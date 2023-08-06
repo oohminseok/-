@@ -1,0 +1,39 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+#include <algorithm>
+
+int main() 
+{  
+	int number;
+	std::cin >> number;
+	std::stack<std::pair<int, int>> stack;
+	std::vector<int> array(number);
+
+	for (int i = 0; i < number; ++i)
+	{
+		int n;
+		std::cin >> n;
+		while (!stack.empty() && stack.top().first < n)
+		{
+			array[stack.top().second] = n;
+			stack.pop();
+		}
+		stack.push({ n,i });
+	}
+
+	for (int i = 0; i < array.size(); ++i)
+	{
+		if (array[i] == 0)
+		{
+			array[i] = -1;
+		}
+	}
+
+	for (auto e : array)
+	{
+		std::cout << e << '\n';
+	}
+
+
+}
