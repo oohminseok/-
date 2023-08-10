@@ -1,0 +1,56 @@
+#include <iostream>
+
+int paper[64][64];
+
+bool cut(int n,int x,int y)
+{
+	for (int i = x; i < n + x; ++i)
+	{
+		for (int j = y; j < n + y; ++j)
+		{
+			if (paper[x][y] != paper[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void QuadTree(int n,int x,int y)
+{
+	if (cut(n, x, y))
+	{
+		std::cout << paper[x][y];
+		return;
+	}
+
+	int number = n / 2;
+
+	std::cout << "(";
+	for (int i = 0; i <2; ++i)
+	{
+		for (int j = 0; j <2; ++j)
+		{
+			QuadTree(number, i*number+x, j*number+y);
+		}
+	}
+	std::cout << ")";
+}
+
+int main()
+{
+	int n;
+	std::cin >> n;
+
+	for (int i = 0; i < n; ++i)
+	{
+		std::string str;
+		std::cin >> str;
+		for (int j = 0; j < n; ++j)
+		{
+			paper[i][j] = str[j] - '0';
+		}
+	}
+	QuadTree(n, 0, 0);
+}
