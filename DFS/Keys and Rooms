@@ -1,0 +1,38 @@
+class Solution 
+{
+public:
+  std::unordered_map<int, bool> visit;
+
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) 
+    {
+         for (int i = 0; i < rooms.size(); ++i)
+         {
+            visit.insert({ i,false });
+	       }
+         dfs(0,rooms);
+
+         for (auto e : visit)
+	       {
+             if (e.second == false)
+		         {
+                 return false;
+		         }
+	       }
+
+	return true;
+}
+
+void dfs(int n, std::vector<std::vector<int>>& rooms)
+{
+	visit[n] = true;
+
+	for (int i = 0; i < rooms[n].size(); ++i)
+	{
+		if (!visit[rooms[n][i]])
+		{
+			dfs(rooms[n][i], rooms);
+		}
+	}
+}
+};
