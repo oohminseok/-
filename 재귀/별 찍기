@@ -1,0 +1,46 @@
+#include <iostream>
+
+char t[2300][2300];
+void Asterisk(int n,int x,int y)
+{
+	if (n==1)
+	{
+		t[x][y] = '*';
+		return;
+	}
+
+	int num = n / 3;
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			if (i == 1 && j == 1)
+			{
+		
+				continue;
+			}
+			Asterisk(num, num * i + x, num * j + y);
+		}
+		std::cout << '\n';
+	}
+}
+
+int main()
+{
+	int n;
+	std::cin >> n;
+	for (int i = 0; i < n; ++i)
+	{
+		std::fill(t[i], t[i] + n, ' ');
+	}
+	Asterisk(n,0,0);
+	
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < n; ++j)
+		{
+			std::cout << t[i][j];
+		}
+		std::cout << '\n';
+	}
+}
