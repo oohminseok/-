@@ -24,7 +24,7 @@ void func(int n, int x, int y)
         return;
     }
 
-    int ns = s / 2;
+    int ns = n / 2;
     func(ns, x, y);
     func(ns, x + ns, y - ns);
     func(ns, x + ns, y + ns);
