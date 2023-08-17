@@ -1,0 +1,25 @@
+class Solution 
+{
+public:
+std::unordered_map<int,int> memo;
+
+public:
+    int minCostClimbingStairs(vector<int>& cost) 
+    {
+       return dp(cost.size(),cost);
+    }
+
+    int dp(int n,std::vector<int>& cost)
+    {
+        if(n==0||n==1)
+        {
+            return 0;
+        }
+        if(!memo[n])
+        {
+             memo[n] = std::min(dp(n - 1,cost)+cost[n-1], dp(n - 2,cost)+cost[n-2]);
+        }
+        return memo[n];
+
+    }
+};
