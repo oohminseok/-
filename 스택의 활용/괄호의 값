@@ -1,1 +1,62 @@
+#include <iostream>
+#include <stack>
 
+int main() 
+{
+    std::string s;
+    std::cin >> s;
+    std::stack<char> t;
+    int sum = 0;
+    int num = 1;
+
+    for (int i = 0; i < s.size(); ++i)
+    {
+        if (s[i] == '(')
+        {
+            num *= 2;
+            t.push(s[i]);
+        }
+        else if (s[i] == '[')
+        {
+            num *= 3;
+            t.push(s[i]);
+        }
+        else if (s[i] == ')')
+        {
+            if (t.empty() || t.top() != '(')
+            {
+                std::cout << 0;
+                return 0;
+            }
+            if (s[i - 1] == '(')
+            {
+                sum += num;
+            }
+            t.pop();
+            num /= 2;
+        }
+        else
+        {
+            if (t.empty() || t.top() != '[')
+            {
+                std::cout << 0;
+                return 0;
+            }
+            if (s[i - 1] == '[')
+            {
+                sum += num;
+            }
+            t.pop();
+            num /= 3;
+        }
+    }
+
+    if (t.empty())
+    {
+        std::cout << sum;
+    }
+    else
+    {
+        std::cout << 0;
+    }
+}
