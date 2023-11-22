@@ -13,14 +13,12 @@ vector<vector<int>> solution(vector<int> num_list, int n)
         temp.push_back(num_list[i]);
         ++count;
         if (count == n)
-		{
-			answer.push_back(temp);
-			temp.clear();
+        {
+	    answer.push_back(temp);
+	    temp.clear();
             count=0;
-		}
+         }
         
     }
-    
-    
     return answer;
 }
