@@ -7,9 +7,12 @@ vector<int> solution(vector<int> arr, vector<vector<int>> intervals)
 {
     vector<int> answer;
     
-    for(const auto& interval : intervals)
+    for(int i=0; i<intervals.size(); ++i)
     {
-        answer.insert(answer.end(),arr.begin()+interval[0],arr.begin()+interval[1] + 1);
+        for(int j=intervals[i][0]; j<=intervals[i][1]; ++j)
+        {
+            answer.push_back(arr[j]);
+        }
     }
     
     return answer;
