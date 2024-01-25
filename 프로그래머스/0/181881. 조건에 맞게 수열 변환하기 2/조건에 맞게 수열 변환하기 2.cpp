@@ -7,32 +7,32 @@ int solution(vector<int> arr)
 {
     int count=0;
     bool ok=true;
-    std::queue<int> q;
+    std::vector<int> v;
     
-    while(ok)
+    while (ok)
     {
         ++count;
-        for(int i=0; i<arr.size(); ++i)
+        for (int i = 0; i < arr.size(); ++i)
         {
-            if(arr[i]>=50&&arr[i]%2==0)
+            if (arr[i] >= 50 && arr[i] % 2 == 0)
             {
-                q.push(arr[i]);
-                arr[i]=arr[i]/2;
+                v.push_back(arr[i]);
+                arr[i] = arr[i] / 2;
             }
-            else if(arr[i]<50&&arr[i]%2==1)
+            else if (arr[i] < 50 && arr[i] % 2 == 1)
             {
-                q.push(arr[i]);
-                arr[i]=(arr[i]*2)+1;
+                v.push_back(arr[i]);
+                arr[i] = (arr[i] * 2) + 1;
             }
             else
             {
-                 q.push(arr[i]);
+                v.push_back(arr[i]);
             }
         }
-        
-          for (int i = 0; i < arr.size(); ++i)
+
+        for (int i = 0; i < arr.size(); ++i)
         {
-            if (q.front() == arr[i])
+            if (v[i] == arr[i])
             {
                 ok = false;
             }
@@ -41,13 +41,9 @@ int solution(vector<int> arr)
                 ok = true;
                 break;
             }
-            q.pop();
         }
 
-        while (!q.empty())
-        {
-            q.pop();
-        }
+        v.clear();
     }
     
     return count-1;
