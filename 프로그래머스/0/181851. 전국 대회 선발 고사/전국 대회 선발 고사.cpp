@@ -10,14 +10,6 @@ int solution(vector<int> rank, vector<bool> attendance)
 
     for (int i = 0; i < rank.size(); ++i)
     {
-        int r = 1;
-        for (int j = 0; j < rank.size(); ++j)
-        {
-            if (rank[i] > rank[j])
-            {
-                ++r;
-            }
-        }
         if (attendance[i] == true)
         {
             v.push_back({ rank[i],i });
